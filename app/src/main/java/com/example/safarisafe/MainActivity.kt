@@ -16,6 +16,7 @@ import com.example.safarisafe.view.screens.alert.SosScreen
 import com.example.safarisafe.view.screens.explore.ExploreRoute
 import com.example.safarisafe.view.screens.identity.IdentityRoute
 import com.example.safarisafe.view.screens.status.SafeStatusRoute
+import com.example.safarisafe.view.screens.Login.LoginRoute
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
-                    NavHost(navController = navController, startDestination = "status") {
+                    NavHost(navController = navController, startDestination = "login") {
+                        composable("login") { LoginRoute(navController) }
                         composable("status") { SafeStatusRoute(navController) }
                         composable("explore") { ExploreRoute(navController) }
                         composable("alert") { HazardAlertRoute(navController) }

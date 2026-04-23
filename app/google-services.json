@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "203110529298",
+    "project_id": "safarisafe-e29d2",
+    "storage_bucket": "safarisafe-e29d2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203110529298:android:aa0666dbea02bd29c59bcb",
+        "android_client_info": {
+          "package_name": "com.example.safarisafe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCecv-_v1s7y-RN_JlPomVlrs50PN8KCpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
