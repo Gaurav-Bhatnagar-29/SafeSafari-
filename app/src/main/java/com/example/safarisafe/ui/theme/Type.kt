@@ -1,4 +1,4 @@
-package com.example.safarisafe.view.theme
+package com.example.safarisafe.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

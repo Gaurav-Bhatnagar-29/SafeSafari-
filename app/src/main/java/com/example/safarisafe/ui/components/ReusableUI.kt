@@ -1,31 +1,41 @@
-package com.example.safarisafe.view.components
+package com.example.safarisafe.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.safarisafe.ui.theme.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopNavBar(title: String, showWarning: Boolean = false) {
+fun TopNavBar(
+    title: String,
+    showWarning: Boolean = false,
+    onMenuClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {}
+) {
     TopAppBar(
         title = { Text(title, fontWeight = FontWeight.Bold, color = TextPrimary) },
         navigationIcon = {
-            IconButton(onClick = { /* Open Drawer */ }) {
+            // FIXED: Removed the invalid AppDrawer() call here.
+            // The IconButton handles the click and passes it up to the parent screen!
+            IconButton(onClick = onMenuClick) {
                 Icon(Icons.Default.Menu, contentDescription = "Menu", tint = PrimaryBlue)
             }
         },
@@ -47,13 +57,19 @@ fun TopNavBar(title: String, showWarning: Boolean = false) {
                     }
                 }
             }
+
             Box(
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .size(32.dp)
                     .clip(CircleShape)
                     .background(SurfaceContainerHighest)
-            )
+                    .clickable { onProfileClick() }, // Box handles the click
+                contentAlignment = Alignment.Center
+            ) {
+                // FIXED: Removed redundant clickable modifier here
+                Icon(Icons.Default.Person, contentDescription = "Profile", tint = TextPrimary, modifier = Modifier.size(20.dp))
+            }
         },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = SurfaceBackground)
     )
@@ -65,7 +81,6 @@ fun BottomNavBar(selectedTab: String, navController: NavController) {
         containerColor = SurfaceContainerHighest.copy(alpha = 0.8f),
         modifier = Modifier.clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
     ) {
-        // ADDED: Identity to the list of tabs
         val tabs = listOf(
             "Safety" to Icons.Default.Shield,
             "Explore" to Icons.Default.Map,
@@ -80,7 +95,6 @@ fun BottomNavBar(selectedTab: String, navController: NavController) {
                 label = { Text(label, fontSize = 10.sp, fontWeight = FontWeight.Medium) },
                 selected = isSelected,
                 onClick = {
-                    // ADDED: Identity routing logic
                     val route = when(label) {
                         "Safety" -> "status"
                         "Explore" -> "explore"

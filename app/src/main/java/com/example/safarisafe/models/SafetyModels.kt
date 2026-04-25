@@ -19,7 +19,9 @@ data class LocationSafety(
     val locationName: String,
     val safetyScore: Int,
     val isVerified: Boolean,
-    val features: List<String>
+    val features: List<String>,
+    val latitude: Double,
+    val longitude: Double
 )
 
 data class HazardUiState(
@@ -56,4 +58,11 @@ data class IdentityProfile(
 data class IdentityUiState(
     val isLoading: Boolean = false,
     val profile: IdentityProfile? = null
+)
+
+data class WeatherInfo(
+    val temperature: String,
+    val condition: String,
+    val city: String,
+    val iconRes: Int // In a real app, use an async image loader like Coil for API icon URLs
 )

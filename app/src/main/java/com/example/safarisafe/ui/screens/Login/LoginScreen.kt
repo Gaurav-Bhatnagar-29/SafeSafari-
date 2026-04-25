@@ -1,5 +1,6 @@
-package com.example.safarisafe.view.screens.Login
+package com.example.safarisafe.ui.screens.Login
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -15,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -71,6 +71,7 @@ fun LoginScreen(
     var passwordVisible by remember { mutableStateOf(false) }
     var isLogin by remember { mutableStateOf(true) }
 
+    Log.d("TAG", "Login Screen")
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = SurfaceBackground

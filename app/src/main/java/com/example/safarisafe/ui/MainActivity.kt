@@ -1,4 +1,4 @@
-package com.example.safarisafe
+package com.example.safarisafe.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,13 +10,15 @@ import androidx.compose.material3.Surface
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.safarisafe.ui.screens.Login.LoginRoute
+import com.example.safarisafe.ui.screens.SplashScreen
+import com.example.safarisafe.ui.screens.alert.HazardAlertRoute
+import com.example.safarisafe.ui.screens.alert.SosRoute
+import com.example.safarisafe.ui.screens.explore.ExploreRoute
+import com.example.safarisafe.ui.screens.identity.IdentityRoute
+import com.example.safarisafe.ui.screens.profile.ProfileScreen
+import com.example.safarisafe.ui.screens.status.SafeStatusRoute
 import com.example.safarisafe.ui.theme.SafariSafeTheme
-import com.example.safarisafe.view.screens.alert.HazardAlertRoute
-import com.example.safarisafe.view.screens.alert.SosScreen
-import com.example.safarisafe.view.screens.explore.ExploreRoute
-import com.example.safarisafe.view.screens.identity.IdentityRoute
-import com.example.safarisafe.view.screens.status.SafeStatusRoute
-import com.example.safarisafe.view.screens.Login.LoginRoute
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +31,16 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
 
-                    NavHost(navController = navController, startDestination = "login") {
+                    // Start destination is now ALWAYS "splash"
+                    NavHost(navController = navController, startDestination = "splash") {
+                        composable("splash") { SplashScreen(navController) }
                         composable("login") { LoginRoute(navController) }
                         composable("status") { SafeStatusRoute(navController) }
                         composable("explore") { ExploreRoute(navController) }
                         composable("alert") { HazardAlertRoute(navController) }
                         composable("identity") { IdentityRoute(navController) }
-                        composable("sos") { SosScreen(navController) }
+                        composable("sos") { SosRoute(navController) }
+                        composable("profile") { ProfileScreen(navController) }
                     }
                 }
             }
