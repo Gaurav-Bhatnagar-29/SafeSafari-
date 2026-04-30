@@ -9,17 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class ProfileViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(UserProfile(
-        fullName = "Arman",
-        email = "arman.travels@email.com",
-        countryCode = "+1",
-        phoneNumber = "(555) 019-2834",
-        passportNumber = "•••• •••• 8291",
-        bloodType = "O+",
-        knownAllergies = "Penicillin, Peanuts",
-        chronicConditions = "Mild Asthma",
-        emergencyContacts = emptyList()
-    ))
+    private val _uiState = MutableStateFlow(UserProfile())
     val uiState: StateFlow<UserProfile> = _uiState.asStateFlow()
 
     fun updateFullName(newName: String) {

@@ -24,13 +24,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.safarisafe.viewmodel.SafetyViewModel
 import com.example.safarisafe.ui.theme.*
 import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(
+    navController: NavController,
+    safetyViewModel: SafetyViewModel = viewModel()
+) {
     val auth = FirebaseAuth.getInstance()
+    val identityState by safetyViewModel.identityState.collectAsState()
+    val profile = identityState.profile
 
     var tripTrackingEnabled by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(true) }
     val context = androidx.compose.ui.platform.LocalContext.current
@@ -81,8 +89,8 @@ fun ProfileScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(12.dp))
             
-            Text(auth.currentUser?.displayName ?: "Arman", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
-            Text(auth.currentUser?.email ?: "arman.travels@email.com", fontSize = 14.sp, color = OnSurfaceVariant)
+            Text(profile?.name ?: auth.currentUser?.displayName ?: "User", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+            Text(auth.currentUser?.email ?: profile?.emergencyContactPhone ?: "traveler@email.com", fontSize = 14.sp, color = OnSurfaceVariant)
             Spacer(modifier = Modifier.height(16.dp))
 
             Surface(

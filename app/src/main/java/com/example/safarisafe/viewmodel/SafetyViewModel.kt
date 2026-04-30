@@ -68,25 +68,6 @@ class SafetyViewModel : ViewModel() {
                 )
             )
         }
-
-        _identityState.update {
-            it.copy(
-                profile = IdentityProfile(
-                    name = "Marcus Vance-Sterling",
-                    nationality = "United Kingdom",
-                    documentNumber = "UK *****492",
-                    bloodType = "O+",
-                    bloodTypeDetail = "Universal Donor",
-                    allergies = "Penicillin",
-                    allergiesDetail = "Severe Anaphylactic Risk",
-                    conditions = "None",
-                    conditionsDetail = "No medical history reported",
-                    emergencyContactName = "Maria Sterling",
-                    emergencyContactRelation = "Spouse / Next of Kin",
-                    emergencyContactPhone = "+44 7700 900341"
-                )
-            )
-        }
     }
 
     fun onSearchQueryChanged(newQuery: String) {
