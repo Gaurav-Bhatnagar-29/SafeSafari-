@@ -1,6 +1,7 @@
 package com.example.safarisafe.ui.screens.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -11,6 +12,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +31,9 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun ProfileScreen(navController: NavController) {
     val auth = FirebaseAuth.getInstance()
+
+    var tripTrackingEnabled by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(true) }
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     Scaffold(
         containerColor = SurfaceBackground,
@@ -82,7 +88,7 @@ fun ProfileScreen(navController: NavController) {
             Surface(
                 shape = CircleShape,
                 color = PrimaryBlue.copy(alpha = 0.1f),
-                onClick = { /* Edit Profile */ }
+                onClick = { navController.navigate("edit_profile") }
             ) {
                 Text(
                     text = "Edit Profile",
@@ -102,7 +108,7 @@ fun ProfileScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                    Box(modifier = Modifier.width(4.dp).fillMaxHeight().background(SecondaryGreen))
+                    Box(modifier = Modifier.width(4.dp).fillMaxHeight().background(if (tripTrackingEnabled) SecondaryGreen else Color.Gray))
 
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -112,11 +118,15 @@ fun ProfileScreen(navController: NavController) {
                         Column {
                             Text("Active Trip Tracking", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("Sharing location with Trusted Contacts.", fontSize = 13.sp, color = OnSurfaceVariant)
+                            Text(
+                                if (tripTrackingEnabled) "Sharing location with Trusted Contacts." else "Location sharing is currently disabled.",
+                                fontSize = 13.sp,
+                                color = OnSurfaceVariant
+                            )
                         }
                         Switch(
-                            checked = true,
-                            onCheckedChange = { /* Toggle */ },
+                            checked = tripTrackingEnabled,
+                            onCheckedChange = { tripTrackingEnabled = it },
                             colors = SwitchDefaults.colors(
                                 checkedThumbColor = Color.White,
                                 checkedTrackColor = SecondaryGreen
@@ -132,9 +142,15 @@ fun ProfileScreen(navController: NavController) {
             SectionHeader("SAFETY & PRIVACY")
             Surface(shape = RoundedCornerShape(16.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
                 Column {
-                    ProfileListItem(Icons.Filled.Shield, "SOS & Emergency Preferences", PrimaryBlue)
-                    ProfileListItem(Icons.Filled.LocationOn, "Location & Tracking Permissions", PrimaryBlue)
-                    ProfileListItem(Icons.Filled.Notifications, "Alerts & Notifications", PrimaryBlue)
+                    ProfileListItem(Icons.Filled.Shield, "SOS & Emergency Preferences", PrimaryBlue) {
+                        android.widget.Toast.makeText(context, "SOS Preferences coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                    ProfileListItem(Icons.Filled.LocationOn, "Location & Tracking Permissions", PrimaryBlue) {
+                         android.widget.Toast.makeText(context, "Location Permissions coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                    ProfileListItem(Icons.Filled.Notifications, "Alerts & Notifications", PrimaryBlue) {
+                         android.widget.Toast.makeText(context, "Notification Settings coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
@@ -144,9 +160,15 @@ fun ProfileScreen(navController: NavController) {
             SectionHeader("GENERAL")
             Surface(shape = RoundedCornerShape(16.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
                 Column {
-                    ProfileListItem(Icons.Filled.Public, "Language & Region")
-                    ProfileListItem(Icons.Filled.Description, "Terms & Privacy Policy")
-                    ProfileListItem(Icons.Filled.HelpOutline, "Help Center & Support")
+                    ProfileListItem(Icons.Filled.Public, "Language & Region") {
+                         android.widget.Toast.makeText(context, "Language settings coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                    ProfileListItem(Icons.Filled.Description, "Terms & Privacy Policy") {
+                         android.widget.Toast.makeText(context, "Terms & Privacy Policy coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                    ProfileListItem(Icons.Filled.HelpOutline, "Help Center & Support") {
+                         android.widget.Toast.makeText(context, "Help Center coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
@@ -196,10 +218,11 @@ fun SectionHeader(title: String) {
 }
 
 @Composable
-fun ProfileListItem(icon: ImageVector, title: String, iconTint: Color = TextPrimary) {
+fun ProfileListItem(icon: ImageVector, title: String, iconTint: Color = TextPrimary, onClick: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

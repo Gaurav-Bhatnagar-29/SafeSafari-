@@ -40,6 +40,25 @@ data class ExploreUiState(
     val searchQuery: String = ""
 )
 
+data class EmergencyContact(
+    val name: String,
+    val relation: String,
+    val phone: String,
+    val initial: String = name.take(1).uppercase()
+)
+
+data class UserProfile(
+    val fullName: String = "",
+    val email: String = "",
+    val countryCode: String = "+1",
+    val phoneNumber: String = "",
+    val passportNumber: String = "",
+    val bloodType: String = "O+",
+    val knownAllergies: String = "",
+    val chronicConditions: String = "",
+    val emergencyContacts: List<EmergencyContact> = emptyList()
+)
+
 data class IdentityProfile(
     val name: String,
     val nationality: String,

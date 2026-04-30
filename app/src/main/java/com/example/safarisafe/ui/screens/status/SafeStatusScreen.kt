@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -41,18 +42,23 @@ fun SafeStatusRoute(
     viewModel: SafetyViewModel = viewModel()
 ) {
     val uiState by viewModel.safeStatusState.collectAsState()
+    val exploreState by viewModel.exploreState.collectAsState()
 
-    // Trigger the API call when the screen loads
-    LaunchedEffect(Unit) {
+    // Trigger the API call when the screen loads or location changes
+    LaunchedEffect(exploreState.currentLocation) {
+        val lat = exploreState.currentLocation?.latitude ?: 28.6139
+        val lng = exploreState.currentLocation?.longitude ?: 77.2090
+        
         viewModel.fetchLiveWeather(
-            lat = 28.6139,
-            lng = 77.2090,
+            lat = lat,
+            lng = lng,
             apiKey = BuildConfig.WEATHER_API_KEY
         )
     }
 
     SafeStatusScreen(
         uiState = uiState,
+        locationName = exploreState.currentLocation?.locationName ?: "Current Location",
         navController = navController,
         onSosClicked = { navController.navigate("sos") }
     )
@@ -62,6 +68,7 @@ fun SafeStatusRoute(
 @Composable
 fun SafeStatusScreen(
     uiState: SafeStatusUiState,
+    locationName: String,
     navController: NavController,
     onSosClicked: () -> Unit
 ) {
@@ -83,12 +90,19 @@ fun SafeStatusScreen(
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { Text("The Vigilant Editorial") },
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch { drawerState.open() }
                         }) {
                             Icon(Icons.Default.Menu, contentDescription = "Menu")
+                        }
+                    },
+                    title = { Text("SafariSafe", fontWeight = FontWeight.Bold) },
+                    actions = {
+                        IconButton(onClick = {
+                            navController.navigate("profile")
+                        }) {
+                            Icon(Icons.Default.Person, contentDescription = "Profile")
                         }
                     }
                 )
@@ -113,6 +127,7 @@ fun SafeStatusScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 WeatherCard(
+                    locationName = locationName,
                     temperature = uiState.temperature,
                     condition = uiState.weatherCondition
                 )
@@ -128,7 +143,7 @@ fun SafeStatusScreen(
 }
 
 @Composable
-fun WeatherCard(temperature: String, condition: String) {
+fun WeatherCard(locationName: String, temperature: String, condition: String) {
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         modifier = Modifier.fillMaxWidth()
@@ -142,7 +157,7 @@ fun WeatherCard(temperature: String, condition: String) {
         ) {
             Column {
                 Text(
-                    text = "Current Location",
+                    text = locationName,
                     fontSize = 14.sp,
                     color = OnSurfaceVariant,
                     fontWeight = FontWeight.Medium
@@ -207,6 +222,7 @@ fun SafeStatusScreenPreview_Active() {
             temperature = "22°C",
             weatherCondition = "Partly Cloudy"
         ),
+        locationName = "New Delhi, India",
         navController = rememberNavController(),
         onSosClicked = {}
     )

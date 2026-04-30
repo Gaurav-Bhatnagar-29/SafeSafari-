@@ -39,10 +39,17 @@ fun IdentityRoute(
     viewModel: SafetyViewModel = viewModel()
 ) {
     val uiState by viewModel.identityState.collectAsState()
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     IdentityScreen(
         uiState = uiState,
-        navController = navController
+        navController = navController,
+        onCallContact = { phone ->
+            val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
+                data = android.net.Uri.parse("tel:$phone")
+            }
+            context.startActivity(intent)
+        }
     )
 }
 
@@ -53,7 +60,8 @@ fun IdentityRoute(
 @Composable
 fun IdentityScreen(
     uiState: IdentityUiState,
-    navController: NavController
+    navController: NavController,
+    onCallContact: (String) -> Unit = {}
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -81,6 +89,13 @@ fun IdentityScreen(
                             scope.launch { drawerState.open() }
                         }) {
                             Icon(Icons.Default.Menu, contentDescription = "Menu")
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            navController.navigate("profile")
+                        }) {
+                            Icon(Icons.Default.Person, contentDescription = "Profile")
                         }
                     }
                 )
@@ -261,7 +276,7 @@ fun IdentityScreen(
                                 )
                             }
                             IconButton(
-                                onClick = { /* Call Action */ },
+                                onClick = { onCallContact(profile.emergencyContactPhone) },
                                 modifier = Modifier
                                     .clip(CircleShape)
                                     .background(PrimaryBlue)

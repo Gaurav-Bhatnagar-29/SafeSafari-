@@ -37,11 +37,15 @@ fun HazardAlertRoute(
     viewModel: SafetyViewModel = viewModel()
 ) {
     val uiState by viewModel.hazardState.collectAsState()
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     HazardAlertScreen(
         uiState = uiState,
         navController = navController,
-        onGetRouteClicked = { viewModel.getEvacuationRoute() },
+        onGetRouteClicked = { 
+            viewModel.getEvacuationRoute() 
+            android.widget.Toast.makeText(context, "Calculating safest evacuation route...", android.widget.Toast.LENGTH_SHORT).show()
+        },
         onSosClicked = { navController.navigate("sos") }
     )
 }

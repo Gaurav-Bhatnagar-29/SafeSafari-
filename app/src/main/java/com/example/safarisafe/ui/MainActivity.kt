@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -16,6 +20,7 @@ import com.example.safarisafe.ui.screens.alert.HazardAlertRoute
 import com.example.safarisafe.ui.screens.alert.SosRoute
 import com.example.safarisafe.ui.screens.explore.ExploreRoute
 import com.example.safarisafe.ui.screens.identity.IdentityRoute
+import com.example.safarisafe.ui.screens.profile.EditProfileScreen
 import com.example.safarisafe.ui.screens.profile.ProfileScreen
 import com.example.safarisafe.ui.screens.status.SafeStatusRoute
 import com.example.safarisafe.ui.theme.SafariSafeTheme
@@ -41,9 +46,40 @@ class MainActivity : ComponentActivity() {
                         composable("identity") { IdentityRoute(navController) }
                         composable("sos") { SosRoute(navController) }
                         composable("profile") { ProfileScreen(navController) }
+                        composable("edit_profile") { EditProfileScreen(onBack = { navController.popBackStack() }) }
+                        
+                        // Added placeholder routes for missing features
+                        composable("safezones") { PlaceholderScreen("My Safe Zones", navController) }
+                        composable("contacts") { IdentityRoute(navController) } // Reuse identity for contacts
+                        composable("itinerary") { PlaceholderScreen("Trip Itinerary", navController) }
+                        composable("settings") { PlaceholderScreen("Settings", navController) }
                     }
                 }
             }
+        }
+    }
+}
+
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+@Composable
+fun PlaceholderScreen(title: String, navController: androidx.navigation.NavController) {
+    androidx.compose.material3.Scaffold(
+        topBar = {
+            androidx.compose.material3.TopAppBar(
+                title = { androidx.compose.material3.Text(title) },
+                navigationIcon = {
+                    androidx.compose.material3.IconButton(onClick = { navController.popBackStack() }) {
+                        androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        androidx.compose.foundation.layout.Box(
+            modifier = androidx.compose.ui.Modifier.fillMaxSize().padding(padding),
+            contentAlignment = androidx.compose.ui.Alignment.Center
+        ) {
+            androidx.compose.material3.Text("This feature ($title) is coming soon!")
         }
     }
 }

@@ -65,6 +65,7 @@ fun ExploreScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current   // ✅ ADD THIS
+    val context = LocalContext.current
 
     val currentRoute = navController.currentBackStackEntry?.destination?.route
 
@@ -86,6 +87,13 @@ fun ExploreScreen(
                             scope.launch { drawerState.open() } // 🔥 OPEN DRAWER
                         }) {
                             Icon(Icons.Default.Menu, contentDescription = "Menu")
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                            navController.navigate("profile")
+                        }) {
+                            Icon(Icons.Default.Person, contentDescription = "Profile")
                         }
                     }
                 )
@@ -202,11 +210,16 @@ fun ExploreScreen(
                                 )
                             )
 
-                            Icon(
-                                Icons.Default.Mic,
-                                contentDescription = "Voice",
-                                tint = PrimaryBlue
-                            )
+                            IconButton(onClick = { 
+                                // Placeholder for voice search
+                                android.widget.Toast.makeText(context, "Voice search coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                            }) {
+                                Icon(
+                                    Icons.Default.Mic,
+                                    contentDescription = "Voice",
+                                    tint = PrimaryBlue
+                                )
+                            }
                         }
                     }
                 }
@@ -269,7 +282,12 @@ fun ExploreScreen(
                             Spacer(modifier = Modifier.height(24.dp))
 
                             Button(
-                                onClick = { /* Navigation logic */ },
+                                onClick = { 
+                                    val gmmIntentUri = android.net.Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
+                                    val mapIntent = android.content.Intent(android.content.Intent.ACTION_VIEW, gmmIntentUri)
+                                    mapIntent.setPackage("com.google.android.apps.maps")
+                                    context.startActivity(mapIntent)
+                                },
                                 modifier = Modifier.fillMaxWidth().height(56.dp),
                                 colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
                             ) {

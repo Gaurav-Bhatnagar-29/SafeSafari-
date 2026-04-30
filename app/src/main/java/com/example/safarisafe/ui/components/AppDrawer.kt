@@ -109,7 +109,7 @@ fun AppDrawer(
             icon = Icons.Outlined.Shield,
             label = "My Safe Zones",
             isSelected = currentRoute == "safezones",
-            onClick = { /* Currently no route defined for safezones */ }
+            onClick = { navigateTo(navController, "safezones") }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -131,14 +131,14 @@ fun AppDrawer(
             icon = Icons.Outlined.Contacts,
             label = "Emergency Contacts",
             isSelected = currentRoute == "contacts",
-            onClick = { /* Currently no route defined for contacts */ }
+            onClick = { navigateTo(navController, "contacts") }
         )
 
         DrawerItem(
             icon = Icons.Outlined.EventNote,
             label = "Trip Itinerary",
             isSelected = currentRoute == "itinerary",
-            onClick = { /* Currently no route defined for itinerary */ }
+            onClick = { navigateTo(navController, "itinerary") }
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -148,7 +148,7 @@ fun AppDrawer(
             icon = Icons.Outlined.Settings,
             label = "Settings",
             isSelected = currentRoute == "settings",
-            onClick = { /* Currently no route defined for settings */ }
+            onClick = { navigateTo(navController, "settings") }
         )
 
         DrawerItem(

@@ -62,7 +62,7 @@ fun SosScreen(
 ) {
     val context = LocalContext.current
     var isPressed by remember { mutableStateOf(false) }
-    var countdown by remember { mutableStateOf(10) } // 10-second timer
+    var countdown by remember { mutableStateOf(5) } // 10-second timer
 
     // Format the coordinates properly (N/S, E/W)
     val latText = "%.4f°".format(abs(latitude))
@@ -213,7 +213,7 @@ fun SosScreen(
         Spacer(modifier = Modifier.height(48.dp))
 
         // Dynamic visual countdown
-        Text("Contacting Emergency Services in $countdown...", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+        Text("Contacting Emergency Services in $countdown...", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(32.dp))
     }
 }
