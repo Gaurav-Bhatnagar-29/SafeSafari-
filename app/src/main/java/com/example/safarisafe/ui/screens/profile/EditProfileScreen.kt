@@ -38,6 +38,40 @@ fun EditProfileScreen(
     var newContactName by remember { mutableStateOf("") }
     var newContactPhone by remember { mutableStateOf("") }
 
+    var showPhotoDialog by remember { mutableStateOf(false) }
+
+    if (showPhotoDialog) {
+        AlertDialog(
+            onDismissRequest = { showPhotoDialog = false },
+            title = { Text("Update Profile Photo", fontWeight = FontWeight.Bold) },
+            text = {
+                Column {
+                    ListItem(
+                        headlineContent = { Text("Take Photo") },
+                        leadingContent = { Icon(Icons.Default.PhotoCamera, contentDescription = null) },
+                        modifier = Modifier.clickable { 
+                            showPhotoDialog = false
+                            android.widget.Toast.makeText(context, "Camera opened", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                    ListItem(
+                        headlineContent = { Text("Choose from Gallery") },
+                        leadingContent = { Icon(Icons.Default.PhotoLibrary, contentDescription = null) },
+                        modifier = Modifier.clickable { 
+                            showPhotoDialog = false
+                            android.widget.Toast.makeText(context, "Gallery opened", android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showPhotoDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
     if (showAddContactDialog) {
         AlertDialog(
             onDismissRequest = { showAddContactDialog = false },
@@ -135,7 +169,7 @@ fun EditProfileScreen(
                 }
                 SmallFloatingActionButton(
                     onClick = { 
-                        android.widget.Toast.makeText(context, "Photo editing coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                        showPhotoDialog = true
                     },
                     shape = CircleShape,
                     containerColor = colors.primary,

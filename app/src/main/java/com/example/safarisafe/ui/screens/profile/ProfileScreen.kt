@@ -143,13 +143,13 @@ fun ProfileScreen(navController: NavController) {
             Surface(shape = RoundedCornerShape(16.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
                 Column {
                     ProfileListItem(Icons.Filled.Shield, "SOS & Emergency Preferences", PrimaryBlue) {
-                        android.widget.Toast.makeText(context, "SOS Preferences coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                        navController.navigate("sos_preferences")
                     }
                     ProfileListItem(Icons.Filled.LocationOn, "Location & Tracking Permissions", PrimaryBlue) {
-                         android.widget.Toast.makeText(context, "Location Permissions coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                         navController.navigate("location_permissions")
                     }
                     ProfileListItem(Icons.Filled.Notifications, "Alerts & Notifications", PrimaryBlue) {
-                         android.widget.Toast.makeText(context, "Notification Settings coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                         navController.navigate("notifications_settings")
                     }
                 }
             }
@@ -161,13 +161,13 @@ fun ProfileScreen(navController: NavController) {
             Surface(shape = RoundedCornerShape(16.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
                 Column {
                     ProfileListItem(Icons.Filled.Public, "Language & Region") {
-                         android.widget.Toast.makeText(context, "Language settings coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                         navController.navigate("language_settings")
                     }
                     ProfileListItem(Icons.Filled.Description, "Terms & Privacy Policy") {
-                         android.widget.Toast.makeText(context, "Terms & Privacy Policy coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                         navController.navigate("terms_privacy")
                     }
                     ProfileListItem(Icons.Filled.HelpOutline, "Help Center & Support") {
-                         android.widget.Toast.makeText(context, "Help Center coming soon!", android.widget.Toast.LENGTH_SHORT).show()
+                         navController.navigate("help_center")
                     }
                 }
             }

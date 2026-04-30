@@ -48,6 +48,14 @@ class MainActivity : ComponentActivity() {
                         composable("profile") { ProfileScreen(navController) }
                         composable("edit_profile") { EditProfileScreen(onBack = { navController.popBackStack() }) }
                         
+                        // Profile Section Routes
+                        composable("sos_preferences") { PlaceholderScreen("SOS Preferences", navController) }
+                        composable("location_permissions") { PlaceholderScreen("Location Permissions", navController) }
+                        composable("notifications_settings") { PlaceholderScreen("Notification Settings", navController) }
+                        composable("language_settings") { PlaceholderScreen("Language Settings", navController) }
+                        composable("terms_privacy") { PlaceholderScreen("Terms & Privacy Policy", navController) }
+                        composable("help_center") { PlaceholderScreen("Help Center", navController) }
+
                         // Added placeholder routes for missing features
                         composable("safezones") { PlaceholderScreen("My Safe Zones", navController) }
                         composable("contacts") { IdentityRoute(navController) } // Reuse identity for contacts
