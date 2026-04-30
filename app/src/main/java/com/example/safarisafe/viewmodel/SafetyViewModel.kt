@@ -163,4 +163,25 @@ class SafetyViewModel : ViewModel() {
     fun getEvacuationRoute() {
         println("Calculating safe route...")
     }
+
+    fun updateFromUserProfile(userProfile: UserProfile) {
+        _identityState.update { state ->
+            state.copy(
+                profile = IdentityProfile(
+                    name = userProfile.fullName,
+                    nationality = "United Kingdom", // Default or extract from somewhere
+                    documentNumber = userProfile.passportNumber,
+                    bloodType = userProfile.bloodType,
+                    bloodTypeDetail = "Verified",
+                    allergies = userProfile.knownAllergies,
+                    allergiesDetail = if (userProfile.knownAllergies.isNotBlank()) "Active Risk" else "None reported",
+                    conditions = userProfile.chronicConditions,
+                    conditionsDetail = if (userProfile.chronicConditions.isNotBlank()) "Managing" else "None reported",
+                    emergencyContactName = userProfile.emergencyContacts.firstOrNull()?.name ?: "None",
+                    emergencyContactRelation = userProfile.emergencyContacts.firstOrNull()?.relation ?: "Contact",
+                    emergencyContactPhone = userProfile.emergencyContacts.firstOrNull()?.phone ?: ""
+                )
+            )
+        }
+    }
 }

@@ -49,7 +49,7 @@ fun LoginRoute(navController: NavController) {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        navController.navigate("status") {
+                        navController.navigate("edit_profile") {
                             popUpTo("login") { inclusive = true }
                         }
                     } else {

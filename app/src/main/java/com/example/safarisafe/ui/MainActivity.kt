@@ -37,16 +37,23 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
 
                     // Start destination is now ALWAYS "splash"
+                    val safetyViewModel: com.example.safarisafe.viewmodel.SafetyViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+
                     NavHost(navController = navController, startDestination = "splash") {
                         composable("splash") { SplashScreen(navController) }
                         composable("login") { LoginRoute(navController) }
-                        composable("status") { SafeStatusRoute(navController) }
-                        composable("explore") { ExploreRoute(navController) }
-                        composable("alert") { HazardAlertRoute(navController) }
-                        composable("identity") { IdentityRoute(navController) }
-                        composable("sos") { SosRoute(navController) }
+                        composable("status") { SafeStatusRoute(navController, viewModel = safetyViewModel) }
+                        composable("explore") { ExploreRoute(navController, viewModel = safetyViewModel) }
+                        composable("alert") { HazardAlertRoute(navController, viewModel = safetyViewModel) }
+                        composable("identity") { IdentityRoute(navController, viewModel = safetyViewModel) }
+                        composable("sos") { SosRoute(navController, viewModel = safetyViewModel) }
                         composable("profile") { ProfileScreen(navController) }
-                        composable("edit_profile") { EditProfileScreen(onBack = { navController.popBackStack() }) }
+                        composable("edit_profile") { 
+                            EditProfileScreen(
+                                onBack = { navController.popBackStack() },
+                                safetyViewModel = safetyViewModel
+                            ) 
+                        }
                         
                         // Profile Section Routes
                         composable("sos_preferences") { PlaceholderScreen("SOS Preferences", navController) }

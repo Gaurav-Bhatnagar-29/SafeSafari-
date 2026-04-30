@@ -23,12 +23,14 @@ import com.example.safarisafe.models.EmergencyContact
 import com.example.safarisafe.models.UserProfile
 import com.example.safarisafe.ui.theme.SafariSafeTheme
 import com.example.safarisafe.viewmodel.ProfileViewModel
+import com.example.safarisafe.viewmodel.SafetyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProfileScreen(
     onBack: () -> Unit = {},
-    viewModel: ProfileViewModel = viewModel()
+    viewModel: ProfileViewModel = viewModel(),
+    safetyViewModel: SafetyViewModel? = null
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val colors = MaterialTheme.colorScheme
@@ -132,6 +134,7 @@ fun EditProfileScreen(
                 actions = {
                     TextButton(onClick = { 
                         viewModel.saveProfile()
+                        safetyViewModel?.updateFromUserProfile(uiState)
                         android.widget.Toast.makeText(context, "Profile updated successfully!", android.widget.Toast.LENGTH_SHORT).show()
                         onBack()
                     }) {
