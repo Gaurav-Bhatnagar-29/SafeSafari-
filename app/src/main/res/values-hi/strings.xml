@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">सफारीसेफ (SafariSafe)</string>
+    
+    <!-- Login Screen -->
+    <string name="welcome_back">वापस स्वागत है!</string>
+    <string name="safety_starts_here">सुरक्षा यहाँ से शुरू होती है।</string>
+    <string name="login">लॉगिन</string>
+    <string name="create_account">खाता बनाएं</string>
+    <string name="email_address">ईमेल पता</string>
+    <string name="password">पासवर्ड</string>
+    <string name="log_in">लॉग इन करें</string>
+    <string name="sign_up">साइन अप करें</string>
+    <string name="dont_have_account">खाता नहीं है? </string>
+    <string name="already_have_account">पहले से ही एक खाता है? </string>
+    <string name="or_continue_with">या इसके साथ जारी रखें</string>
+    <string name="google">गूगल</string>
+    <string name="apple">एप्पल</string>
+
+    <!-- Navigation / Drawer -->
+    <string name="nav_safety_status">सुरक्षा स्थिति</string>
+    <string name="nav_explore_map">मानचित्र खोजें</string>
+    <string name="nav_active_hazards">सक्रिय खतरे</string>
+    <string name="nav_digital_identity">डिजिटल पहचान</string>
+    <string name="nav_edit_profile">प्रोफ़ाइल संपादित करें</string>
+    <string name="nav_trip_itinerary">यात्रा कार्यक्रम</string>
+    <string name="nav_settings">सेटिंग्स</string>
+    <string name="nav_sign_out">साइन आउट</string>
+    <string name="nav_alerts">अलर्ट</string>
+    <string name="nav_safety">सुरक्षा</string>
+    <string name="nav_explore">खोजें</string>
+    <string name="nav_identity">पहचान</string>
+    <string name="nav_menu">मेनू</string>
+    <string name="nav_profile">प्रोफ़ाइल</string>
+
+    <!-- Status Screen -->
+    <string name="status_you_are_safe">आप सुरक्षित हैं।</string>
+    <string name="status_all_systems_operational">सभी सिस्टम चालू हैं।</string>
+    <string name="status_active">सक्रिय</string>
+    <string name="status_foreground_monitoring">फॉरग्राउंड मॉनिटरिंग</string>
+    <string name="status_monitoring_desc">सिस्टम आपकी सुरक्षा के लिए लगातार पर्यावरणीय संकेतों को ट्रैक कर रहा है।</string>
+    <string name="status_current_location">वर्तमान स्थान</string>
+    <string name="status_weather_icon">मौसम आइकन</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_account">खाता</string>
+    <string name="profile_back">पीछे</string>
+    <string name="profile_picture">प्रोफ़ाइल तस्वीर</string>
+    <string name="profile_verified">सत्यापित</string>
+    <string name="profile_verified_explorer">सत्यापित खोजकर्ता</string>
+    <string name="profile_active_trip_tracking">सक्रिय यात्रा ट्रैकिंग</string>
+    <string name="profile_tracking_online">संपर्कों के साथ लाइव स्थान साझा किया गया।</string>
+    <string name="profile_tracking_offline">ट्रैकिंग वर्तमान में ऑफ़लाइन है।</string>
+    <string name="profile_safety_privacy">सुरक्षा और गोपनीयता</string>
+    <string name="profile_sos_preferences">SOS और आपातकालीन प्राथमिकताएं</string>
+    <string name="profile_location_permissions">स्थान अनुमतियां</string>
+    <string name="profile_notification_settings">नोटिफिकेशन सेटिंग्स</string>
+    <string name="profile_general">सामान्य</string>
+    <string name="profile_language_region">भाषा और क्षेत्र</string>
+    <string name="profile_help_center">सहायता केंद्र</string>
+    <string name="profile_terms_privacy">नियम और गोपनीयता नीति</string>
+
+    <!-- SOS Screen -->
+    <string name="sos_permissions_required">SOS के लिए अनुमतियां आवश्यक हैं!</string>
+    <string name="sos_high_precision">उच्च परिशुद्धता</string>
+    <string name="sos_emergency_sending">आपातकालीन:\nनिर्देशांक\nभेजे जा रहे हैं</string>
+    <string name="sos_live_transmission">लाइव ट्रांसमिशन सक्रिय</string>
+    <string name="sos_latitude">अक्षांश</string>
+    <string name="sos_longitude">देशांतर</string>
+    <string name="sos_cancel">रद्द करें</string>
+    <string name="sos_hold_to_cancel">रद्द करने के लिए\nदबाकर रखें</string>
+    <string name="sos_contacting_services">%1$d सेकंड में आपातकालीन सेवाओं से संपर्क किया जा रहा है...</string>
+    <string name="sos_dispatch_whatsapp">व्हाट्सएप के माध्यम से भेजें</string>
+
+    <!-- Hazard Alert Screen -->
+    <string name="hazard_active_hazards">सक्रिय खतरे</string>
+    <string name="hazard_critical_detected">गंभीर खतरा पाया गया</string>
+    <string name="hazard_get_evacuation_route">निकासी मार्ग प्राप्त करें</string>
+    <string name="hazard_interactive_map">इंटरैक्टिव खतरा मानचित्र</string>
+    <string name="hazard_restricted_zone">प्रतिबंधित क्षेत्र</string>
+    <string name="hazard_immediate_actions">तत्काल कार्रवाई</string>
+    <string name="hazard_calculating_route">सबसे सुरक्षित निकासी मार्ग की गणना की जा रही है...</string>
+
+    <!-- Identity Screen -->
+    <string name="identity_verified_identity">सत्यापित पहचान</string>
+    <string name="identity_digital_id_triage">डिजिटल आईडी और\nट्राइएज प्रोफ़ाइल</string>
+    <string name="identity_passport">पासपोर्ट: %1$s</string>
+    <string name="identity_blood_type">रक्त समूह</string>
+    <string name="identity_known_allergies">ज्ञात एलर्जी</string>
+    <string name="identity_chronic_conditions">पुरानी स्थितियां</string>
+    <string name="identity_none">कोई नहीं</string>
+    <string name="identity_emergency_contacts">आपातकालीन संपर्क</string>
+    <string name="identity_call">कॉल करें</string>
+    <string name="identity_authority_scan">प्राधिकरण स्कैन</string>
+    <string name="identity_authority_scan_desc">आपातकालीन स्थिति में प्रथम उत्तरदाता आपकी चिकित्सा प्रोफ़ाइल तक पहुँचने के लिए इस कोड को स्कैन कर सकते हैं।</string>
+    <string name="identity_loading_qr">QR लोड हो रहा है</string>
+</resources>

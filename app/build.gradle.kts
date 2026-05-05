@@ -66,6 +66,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.6.0")
     implementation("com.google.maps.android:maps-compose:4.3.3")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.1.0")
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-auth")
@@ -73,6 +74,7 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.zxing:core:3.5.3")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

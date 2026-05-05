@@ -53,10 +53,13 @@ data class UserProfile(
     val countryCode: String = "+1",
     val phoneNumber: String = "",
     val passportNumber: String = "",
+    val nationality: String = "",
     val bloodType: String = "O+",
     val knownAllergies: String = "",
     val chronicConditions: String = "",
-    val emergencyContacts: List<EmergencyContact> = emptyList()
+    val emergencyContacts: List<EmergencyContact> = emptyList(),
+    val profileImageUri: String? = null,
+    val googleDriveLink: String = ""
 )
 
 data class IdentityProfile(
@@ -71,7 +74,9 @@ data class IdentityProfile(
     val conditionsDetail: String,
     val emergencyContactName: String,
     val emergencyContactRelation: String,
-    val emergencyContactPhone: String
+    val emergencyContactPhone: String,
+    val profileImageUri: String? = null,
+    val googleDriveLink: String = ""
 )
 
 data class IdentityUiState(

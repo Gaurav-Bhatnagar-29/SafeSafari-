@@ -11,23 +11,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
+import com.example.safarisafe.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.safarisafe.viewmodel.SafetyViewModel
+import androidx.navigation.NavController
+import com.example.safarisafe.ui.components.SafariCard
 import com.example.safarisafe.ui.theme.*
+import com.example.safarisafe.viewmodel.SafetyViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,34 +36,30 @@ fun ProfileScreen(
     navController: NavController,
     safetyViewModel: SafetyViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val auth = FirebaseAuth.getInstance()
     val identityState by safetyViewModel.identityState.collectAsState()
     val profile = identityState.profile
 
-    var tripTrackingEnabled by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(true) }
-    val context = androidx.compose.ui.platform.LocalContext.current
+    var tripTrackingEnabled by remember { mutableStateOf(false) }
 
     Scaffold(
-        containerColor = SurfaceBackground,
+        containerColor = BackgroundDark,
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "Account",
-                        color = PrimaryBlue,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
+                        stringResource(R.string.profile_account),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = TextPrimary
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = PrimaryBlue)
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.profile_back), tint = TextPrimary)
                     }
                 },
-                actions = { Spacer(modifier = Modifier.width(48.dp)) },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = SurfaceBackground)
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = BackgroundDark)
             )
         }
     ) { paddingValues ->
@@ -72,184 +68,201 @@ fun ProfileScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-            // --- Profile Info ---
-            Icon(
-                imageVector = Icons.Filled.Person,
-                contentDescription = "Profile Picture",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .background(Color.LightGray)
-                    .padding(16.dp)
-            )
-            Spacer(modifier = Modifier.height(12.dp))
+            // --- Profile Header ---
+            Box(contentAlignment = Alignment.Center) {
+                Surface(
+                    modifier = Modifier.size(120.dp),
+                    shape = CircleShape,
+                    color = SurfaceDark,
+                    border = androidx.compose.foundation.BorderStroke(2.dp, PrimaryAccent.copy(alpha = 0.3f))
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Person,
+                        contentDescription = stringResource(R.string.profile_picture),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(32.dp),
+                        tint = TextSecondary
+                    )
+                }
+            }
             
-            Text(profile?.name ?: auth.currentUser?.displayName ?: "User", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
-            Text(auth.currentUser?.email ?: profile?.emergencyContactPhone ?: "traveler@email.com", fontSize = 14.sp, color = OnSurfaceVariant)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
+            
+            Text(
+                text = profile?.name ?: auth.currentUser?.displayName ?: "Arman",
+                style = MaterialTheme.typography.displayLarge,
+                color = TextPrimary
+            )
+            Text(
+                text = auth.currentUser?.email ?: "traveler@safari.com",
+                style = MaterialTheme.typography.bodyLarge,
+                color = TextSecondary
+            )
+            
+            Spacer(modifier = Modifier.height(24.dp))
 
             Surface(
                 shape = CircleShape,
-                color = PrimaryBlue.copy(alpha = 0.1f),
-                onClick = { navController.navigate("edit_profile") }
+                color = PrimaryAccent.copy(alpha = 0.1f),
+                onClick = { navController.navigate("edit_profile") },
+                border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryAccent.copy(alpha = 0.5f))
             ) {
                 Text(
-                    text = "Edit Profile",
-                    color = PrimaryBlue,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                    text = stringResource(R.string.nav_edit_profile),
+                    color = PrimaryAccent,
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 32.dp, vertical = 12.dp)
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-            // --- Active Trip Tracking Card ---
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                color = Color(0xFFE8EDF5),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                    Box(modifier = Modifier.width(4.dp).fillMaxHeight().background(if (tripTrackingEnabled) SecondaryGreen else Color.Gray))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text("Active Trip Tracking", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                if (tripTrackingEnabled) "Sharing location with Trusted Contacts." else "Location sharing is currently disabled.",
-                                fontSize = 13.sp,
-                                color = OnSurfaceVariant
-                            )
-                        }
-                        Switch(
-                            checked = tripTrackingEnabled,
-                            onCheckedChange = { tripTrackingEnabled = it },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = Color.White,
-                                checkedTrackColor = SecondaryGreen
-                            )
+            // --- Tracking Control Card ---
+            SafariCard {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.profile_active_trip_tracking), style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = TextPrimary)
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = if (tripTrackingEnabled) stringResource(R.string.profile_tracking_online) else stringResource(R.string.profile_tracking_offline),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = TextSecondary
                         )
                     }
+                    Switch(
+                        checked = tripTrackingEnabled,
+                        onCheckedChange = { 
+                            tripTrackingEnabled = it
+                            if (it) {
+                                profile?.emergencyContactPhone?.let { phone ->
+                                    if (phone.isNotBlank()) {
+                                        safetyViewModel.openWhatsAppChat(context, phone)
+                                    }
+                                }
+                            }
+                        },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = SuccessGreen,
+                            uncheckedTrackColor = SurfaceDark,
+                            uncheckedBorderColor = TextSecondary.copy(alpha = 0.5f)
+                        )
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             // --- Safety & Privacy Section ---
-            SectionHeader("SAFETY & PRIVACY")
-            Surface(shape = RoundedCornerShape(16.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
+            SectionHeader(stringResource(R.string.profile_safety_privacy))
+            SafariCard(modifier = Modifier.padding(vertical = 8.dp)) {
                 Column {
-                    ProfileListItem(Icons.Filled.Shield, "SOS & Emergency Preferences", PrimaryBlue) {
+                    ProfileListItem(Icons.Filled.Shield, stringResource(R.string.profile_sos_preferences)) {
                         navController.navigate("sos_preferences")
                     }
-                    ProfileListItem(Icons.Filled.LocationOn, "Location & Tracking Permissions", PrimaryBlue) {
+                    ProfileListItem(Icons.Filled.LocationOn, stringResource(R.string.profile_location_permissions)) {
                          navController.navigate("location_permissions")
                     }
-                    ProfileListItem(Icons.Filled.Notifications, "Alerts & Notifications", PrimaryBlue) {
+                    ProfileListItem(Icons.Filled.Notifications, stringResource(R.string.profile_notification_settings)) {
                          navController.navigate("notifications_settings")
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // --- General Section ---
-            SectionHeader("GENERAL")
-            Surface(shape = RoundedCornerShape(16.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
+            SectionHeader(stringResource(R.string.profile_general))
+            SafariCard(modifier = Modifier.padding(vertical = 8.dp)) {
                 Column {
-                    ProfileListItem(Icons.Filled.Public, "Language & Region") {
+                    ProfileListItem(Icons.Filled.Public, stringResource(R.string.profile_language_region)) {
                          navController.navigate("language_settings")
                     }
-                    ProfileListItem(Icons.Filled.Description, "Terms & Privacy Policy") {
+                    ProfileListItem(Icons.Filled.Description, stringResource(R.string.profile_terms_privacy)) {
                          navController.navigate("terms_privacy")
                     }
-                    ProfileListItem(Icons.Filled.HelpOutline, "Help Center & Support") {
+                    ProfileListItem(Icons.Filled.HelpOutline, stringResource(R.string.profile_help_center)) {
                          navController.navigate("help_center")
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(48.dp))
 
-            // --- Log Out Button ---
-            Surface(
-                shape = CircleShape,
-                color = TertiaryRed.copy(alpha = 0.1f),
+            // --- Sign Out Button ---
+            TextButton(
                 onClick = {
                     auth.signOut()
                     navController.navigate("login") {
                         popUpTo(0) { inclusive = true }
                     }
                 },
-                modifier = Modifier.fillMaxWidth(0.6f)
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Log Out",
-                    color = TertiaryRed,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(vertical = 16.dp)
+                    text = stringResource(R.string.nav_sign_out),
+                    color = ErrorRed,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 }
-
-// --- Supporting Components ---
 
 @Composable
 fun SectionHeader(title: String) {
     Text(
         text = title,
-        fontSize = 12.sp,
+        style = MaterialTheme.typography.labelMedium,
         fontWeight = FontWeight.Bold,
-        color = OnSurfaceVariant,
-        letterSpacing = 1.sp,
+        color = TextSecondary,
+        letterSpacing = 1.5.sp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 12.dp, start = 4.dp)
+            .padding(start = 4.dp, bottom = 8.dp)
     )
 }
 
 @Composable
-fun ProfileListItem(icon: ImageVector, title: String, iconTint: Color = TextPrimary, onClick: () -> Unit = {}) {
+fun ProfileListItem(icon: ImageVector, title: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(16.dp),
+            .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .background(SurfaceContainerLow, shape = RoundedCornerShape(10.dp)),
+                .clip(RoundedCornerShape(12.dp))
+                .background(PrimaryAccent.copy(alpha = 0.1f)),
             contentAlignment = Alignment.Center
         ) {
-            Icon(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(20.dp))
+            Icon(icon, contentDescription = null, tint = PrimaryAccent, modifier = Modifier.size(20.dp))
         }
         Spacer(modifier = Modifier.width(16.dp))
         Text(
             text = title,
-            fontSize = 15.sp,
+            style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Medium,
             color = TextPrimary,
             modifier = Modifier.weight(1f)
         )
-        Icon(Icons.Filled.ChevronRight, contentDescription = "Go", tint = Color.LightGray)
+        Icon(Icons.Filled.ChevronRight, contentDescription = "Go", tint = TextSecondary.copy(alpha = 0.5f))
     }
 }

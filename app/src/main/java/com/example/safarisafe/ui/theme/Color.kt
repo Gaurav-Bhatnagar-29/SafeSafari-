@@ -2,15 +2,23 @@ package com.example.safarisafe.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val PrimaryBlue = Color(0xFF005DAC)
-val ErrorRed = Color(0xFFBA1A1A)
-val ErrorContainer = Color(0xFFFFDAD6)
+// Background & Surface
+val BackgroundDark = Color(0xFF05080F)
+val SurfaceDark = Color(0xFF121824)
+
+// Accents
+val PrimaryAccent = Color(0xFF00A3FF)
+val PrimaryAccentGradient = Color(0xFF00C2FF)
+val SuccessGreen = Color(0xFF00E676)
+val ErrorRed = Color(0xFFFF5252)
+
+// Text
+val TextPrimary = Color(0xFFFFFFFF)
+val TextSecondary = Color(0xFF8892A0)
+
+// Legacy compatibility (if needed by other screens temporarily)
 val TertiaryRed = Color(0xFFB7181F)
-val SurfaceBackground = Color(0xFFFAF8FF)
-val SurfaceContainerLow = Color(0xFFF2F3FD)
-val SurfaceContainer = Color(0xFFEDEDF7)
-val SurfaceContainerHighest = Color(0xFFE1E2EC)
-val SecondaryGreen = Color(0xFF1B6D24)
-val SecondaryContainerGreen = Color(0xFFA0F399)
-val OnSurfaceVariant = Color(0xFF414752)
-val TextPrimary = Color(0xFF191B22)
+val SecondaryGreen = SuccessGreen
+val ErrorContainer = Color(0xFF452724)
+val SurfaceContainerHighest = Color(0xFF1E2632)
+val OnSurfaceVariant = TextSecondary

@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">SafariSafe</string>
+    
+    <!-- Login Screen -->
+    <string name="welcome_back">Bon retour !</string>
+    <string name="safety_starts_here">La sécurité commence ici.</string>
+    <string name="login">Connexion</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="email_address">Adresse e-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="log_in">Se connecter</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="dont_have_account">Vous n\'avez pas de compte ? </string>
+    <string name="already_have_account">Vous avez déjà un compte ? </string>
+    <string name="or_continue_with">Ou continuer avec</string>
+    <string name="google">Google</string>
+    <string name="apple">Apple</string>
+
+    <!-- Navigation / Drawer -->
+    <string name="nav_safety_status">État de sécurité</string>
+    <string name="nav_explore_map">Explorer la carte</string>
+    <string name="nav_active_hazards">Dangers actifs</string>
+    <string name="nav_digital_identity">Identité numérique</string>
+    <string name="nav_edit_profile">Modifier le profil</string>
+    <string name="nav_trip_itinerary">Itinéraire de voyage</string>
+    <string name="nav_settings">Paramètres</string>
+    <string name="nav_sign_out">Se déconnecter</string>
+    <string name="nav_alerts">Alertes</string>
+    <string name="nav_safety">Sécurité</string>
+    <string name="nav_explore">Explorer</string>
+    <string name="nav_identity">Identité</string>
+    <string name="nav_menu">Menu</string>
+    <string name="nav_profile">Profil</string>
+
+    <!-- Status Screen -->
+    <string name="status_you_are_safe">Vous êtes en sécurité.</string>
+    <string name="status_all_systems_operational">Tous les systèmes sont opérationnels.</string>
+    <string name="status_active">ACTIF</string>
+    <string name="status_foreground_monitoring">Surveillance en arrière-plan</string>
+    <string name="status_monitoring_desc">Le système suit en permanence les indices environnementaux pour votre protection.</string>
+    <string name="status_current_location">Emplacement actuel</string>
+    <string name="status_weather_icon">Icône météo</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_account">Compte</string>
+    <string name="profile_back">Retour</string>
+    <string name="profile_picture">Photo de profil</string>
+    <string name="profile_verified">Vérifié</string>
+    <string name="profile_verified_explorer">Explorateur vérifié</string>
+    <string name="profile_active_trip_tracking">Suivi de voyage actif</string>
+    <string name="profile_tracking_online">Emplacement en direct partagé avec les contacts.</string>
+    <string name="profile_tracking_offline">Le suivi est actuellement hors ligne.</string>
+    <string name="profile_safety_privacy">SÉCURITÉ ET CONFIDENTIALITÉ</string>
+    <string name="profile_sos_preferences">Préférences SOS et d\'urgence</string>
+    <string name="profile_location_permissions">Autorisations de localisation</string>
+    <string name="profile_notification_settings">Paramètres de notification</string>
+    <string name="profile_general">GÉNÉRAL</string>
+    <string name="profile_language_region">Langue et région</string>
+    <string name="profile_help_center">Centre d\'aide</string>
+    <string name="profile_terms_privacy">Conditions et politique de confidentialité</string>
+
+    <!-- SOS Screen -->
+    <string name="sos_permissions_required">Autorisations requises pour le SOS !</string>
+    <string name="sos_high_precision">HAUTE PRÉCISION</string>
+    <string name="sos_emergency_sending">URGENCE :\nENVOI DES\nCOORDONNÉES</string>
+    <string name="sos_live_transmission">TRANSMISSION EN DIRECT ACTIVE</string>
+    <string name="sos_latitude">LATITUDE</string>
+    <string name="sos_longitude">LONGITUDE</string>
+    <string name="sos_cancel">Annuler</string>
+    <string name="sos_hold_to_cancel">MAINTENIR POUR\nANNULER</string>
+    <string name="sos_contacting_services">Contact des services d\'urgence dans %1$d...</string>
+    <string name="sos_dispatch_whatsapp">ENVOYER VIA WHATSAPP</string>
+
+    <!-- Hazard Alert Screen -->
+    <string name="hazard_active_hazards">Dangers actifs</string>
+    <string name="hazard_critical_detected">DANGER CRITIQUE DÉTECTÉ</string>
+    <string name="hazard_get_evacuation_route">OBTENIR L\'ITINÉRAIRE D\'ÉVACUATION</string>
+    <string name="hazard_interactive_map">Carte interactive des dangers</string>
+    <string name="hazard_restricted_zone">ZONE RESTREINTE</string>
+    <string name="hazard_immediate_actions">ACTIONS IMMÉDIATES</string>
+    <string name="hazard_calculating_route">Calcul de l\'itinéraire d\'évacuation le plus sûr...</string>
+
+    <!-- Identity Screen -->
+    <string name="identity_verified_identity">IDENTITÉ VÉRIFIÉE</string>
+    <string name="identity_digital_id_triage">ID numérique et\nProfil de triage</string>
+    <string name="identity_passport">PASSEPORT : %1$s</string>
+    <string name="identity_blood_type">GROUPE SANGUIN</string>
+    <string name="identity_known_allergies">ALLERGIES CONNUES</string>
+    <string name="identity_chronic_conditions">MALADIES CHRONIQUES</string>
+    <string name="identity_none">Aucune</string>
+    <string name="identity_emergency_contacts">CONTACTS D\'URGENCE</string>
+    <string name="identity_call">Appeler</string>
+    <string name="identity_authority_scan">Scan d\'autorité</string>
+    <string name="identity_authority_scan_desc">Les premiers intervenants peuvent scanner ce code pour accéder à votre profil médical en cas d\'urgence.</string>
+    <string name="identity_loading_qr">Chargement du QR</string>
+</resources>

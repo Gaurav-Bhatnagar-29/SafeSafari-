@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.safarisafe.R
+import com.example.safarisafe.ui.theme.BackgroundDark
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -32,7 +33,7 @@ fun SplashScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(BackgroundDark),
         contentAlignment = Alignment.Center
     ) {
         AndroidView(

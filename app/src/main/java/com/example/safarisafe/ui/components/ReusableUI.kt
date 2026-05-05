@@ -1,145 +1,164 @@
 package com.example.safarisafe.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
+import com.example.safarisafe.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.safarisafe.ui.theme.*
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopNavBar(
-    title: String,
-    showWarning: Boolean = false,
-    onMenuClick: () -> Unit = {},
-    onProfileClick: () -> Unit = {}
+fun SafariCard(
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit
 ) {
-    TopAppBar(
-        title = { Text(title, fontWeight = FontWeight.Bold, color = TextPrimary) },
-        navigationIcon = {
-            // FIXED: Removed the invalid AppDrawer() call here.
-            // The IconButton handles the click and passes it up to the parent screen!
-            IconButton(onClick = onMenuClick) {
-                Icon(Icons.Default.Menu, contentDescription = "Menu", tint = PrimaryBlue)
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = SurfaceDark,
+        shape = RoundedCornerShape(24.dp),
+        content = {
+            Column(modifier = Modifier.padding(24.dp)) {
+                content()
             }
-        },
-        actions = {
-            if (showWarning) {
-                Surface(
-                    color = Color(0xFFFEF3C7),
-                    shape = CircleShape,
-                    border = BorderStroke(1.dp, Color(0xFFFDE68A)),
-                    modifier = Modifier.padding(end = 8.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color(0xFFD97706)))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("WARNING", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color(0xFF78350F))
-                    }
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .padding(end = 16.dp)
-                    .size(32.dp)
-                    .clip(CircleShape)
-                    .background(SurfaceContainerHighest)
-                    .clickable { onProfileClick() }, // Box handles the click
-                contentAlignment = Alignment.Center
-            ) {
-                // FIXED: Removed redundant clickable modifier here
-                Icon(Icons.Default.Person, contentDescription = "Profile", tint = TextPrimary, modifier = Modifier.size(20.dp))
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = SurfaceBackground)
+        }
     )
 }
 
 @Composable
-fun BottomNavBar(selectedTab: String, navController: NavController) {
-    NavigationBar(
-        containerColor = SurfaceContainerHighest.copy(alpha = 0.8f),
-        modifier = Modifier.clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+fun SafariButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    containerColor: Color = PrimaryAccent,
+    contentColor: Color = Color.White
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        ),
+        shape = CircleShape // Pill shape as per 999px spec
     ) {
-        val tabs = listOf(
-            "Safety" to Icons.Default.Shield,
-            "Explore" to Icons.Default.Map,
-            "Alerts" to Icons.Default.Notifications,
-            "Identity" to Icons.Default.Fingerprint
+        Text(
+            text = text,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
         )
+    }
+}
 
-        tabs.forEach { (label, icon) ->
-            val isSelected = selectedTab == label
-            NavigationBarItem(
-                icon = { Icon(icon, contentDescription = label) },
-                label = { Text(label, fontSize = 10.sp, fontWeight = FontWeight.Medium) },
-                selected = isSelected,
-                onClick = {
-                    val route = when(label) {
-                        "Safety" -> "status"
-                        "Explore" -> "explore"
-                        "Alerts" -> "alert"
-                        "Identity" -> "identity"
-                        else -> "status"
-                    }
-                    navController.navigate(route) {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color.White,
-                    selectedTextColor = PrimaryBlue,
-                    indicatorColor = PrimaryBlue,
-                    unselectedIconColor = OnSurfaceVariant,
-                    unselectedTextColor = OnSurfaceVariant
-                )
-            )
+@Composable
+fun FloatingBottomNav(
+    selectedTab: String,
+    navController: NavController,
+    onSosClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        Surface(
+            color = SurfaceDark.copy(alpha = 0.95f),
+            shape = CircleShape,
+            shadowElevation = 8.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                NavIcon(Icons.Default.Shield, stringResource(R.string.nav_safety), selectedTab == stringResource(R.string.nav_safety)) {
+                    navController.navigate("status")
+                }
+                NavIcon(Icons.Default.Map, stringResource(R.string.nav_explore), selectedTab == stringResource(R.string.nav_explore)) {
+                    navController.navigate("explore")
+                }
+                
+                // Central SOS Button
+                Box(
+                    modifier = Modifier
+                        .size(64.dp)
+                        .clip(CircleShape)
+                        .background(TertiaryRed)
+                        .clickable { onSosClick() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(Icons.Default.Warning, contentDescription = "SOS", tint = Color.White, modifier = Modifier.size(32.dp))
+                }
+
+                NavIcon(Icons.Default.Notifications, stringResource(R.string.nav_alerts), selectedTab == stringResource(R.string.nav_alerts)) {
+                    navController.navigate("alert")
+                }
+                NavIcon(Icons.Default.Fingerprint, stringResource(R.string.nav_identity), selectedTab == stringResource(R.string.nav_identity)) {
+                    navController.navigate("identity")
+                }
+            }
         }
     }
 }
 
 @Composable
-fun SosFab(onClick: () -> Unit, modifier: Modifier = Modifier) {
-    Box(contentAlignment = Alignment.Center, modifier = modifier) {
-        Box(
-            modifier = Modifier
-                .size(110.dp)
-                .clip(CircleShape)
-                .background(TertiaryRed.copy(alpha = 0.1f))
+private fun NavIcon(
+    icon: ImageVector,
+    label: String,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = icon,
+            contentDescription = label,
+            tint = if (isSelected) PrimaryAccent else TextSecondary,
+            modifier = Modifier.size(28.dp)
         )
-        FloatingActionButton(
-            onClick = onClick,
-            containerColor = TertiaryRed,
-            contentColor = Color.White,
-            shape = CircleShape,
-            modifier = Modifier.size(80.dp)
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Icon(Icons.Default.Warning, contentDescription = "SOS", modifier = Modifier.size(32.dp))
-                Text("SOS", fontWeight = FontWeight.Black, fontSize = 12.sp)
-            }
-        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SafariTopBar(
+    title: String,
+    onMenuClick: () -> Unit,
+    onProfileClick: () -> Unit
+) {
+    CenterAlignedTopAppBar(
+        title = { Text(title, fontWeight = FontWeight.Bold, color = TextPrimary) },
+        navigationIcon = {
+            IconButton(onClick = onMenuClick) {
+                Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.nav_menu), tint = TextPrimary)
+            }
+        },
+        actions = {
+            IconButton(onClick = onProfileClick) {
+                Icon(Icons.Default.Person, contentDescription = stringResource(R.string.nav_profile), tint = TextPrimary)
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color.Transparent
+        )
+    )
 }

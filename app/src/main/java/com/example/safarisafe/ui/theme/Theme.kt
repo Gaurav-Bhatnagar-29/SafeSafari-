@@ -1,27 +1,31 @@
 package com.example.safarisafe.ui.theme
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
-private val AppColorScheme = lightColorScheme(
-    primary = PrimaryBlue,
-    error = ErrorRed,
-    errorContainer = ErrorContainer,
-    tertiary = TertiaryRed,
-    background = SurfaceBackground,
-    surface = SurfaceBackground,
-    surfaceVariant = SurfaceContainerHighest,
+private val AppColorScheme = darkColorScheme(
+    primary = PrimaryAccent,
     secondary = SecondaryGreen,
-    secondaryContainer = SecondaryContainerGreen,
+    tertiary = TertiaryRed,
+    background = BackgroundDark,
+    surface = SurfaceDark,
+    error = ErrorRed,
+    onPrimary = TextPrimary,
+    onSecondary = BackgroundDark,
+    onTertiary = TextPrimary,
+    onBackground = TextPrimary,
     onSurface = TextPrimary,
-    onSurfaceVariant = OnSurfaceVariant
+    onSurfaceVariant = TextSecondary,
+    surfaceVariant = SurfaceContainerHighest,
+    errorContainer = ErrorContainer
 )
 
 @Composable
 fun SafariSafeTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = AppColorScheme,
+        typography = Typography,
         content = content
     )
 }
